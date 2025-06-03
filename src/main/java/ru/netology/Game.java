@@ -15,25 +15,38 @@ public class Game {
 
     public int round(String playerName1, String playerName2) {
 
+        if (listRegister.isEmpty()) {
+            throw new NotRegisteredException(
+                    "Пользователь не зарегистрирован!"
+            );
+        }
+
         Player playerOne = null;
         Player playerTwo = null;
+        int strengthOne = 0;
+        int strengthTwo = 0;
 
         // Проверка зарегистрированы ли пользователи
         for (Player playerName : listRegister) {
             if (playerName.getName().equals(playerName1)) {
                 playerOne = playerName;
+                strengthOne = playerOne.getStrength();
             } else if (playerName.getName().equals(playerName2)) {
                 playerTwo = playerName;
-            } else {
+                strengthTwo = playerTwo.getStrength();
+            }
+
+            if (playerOne != null && playerTwo != null) break;
+            else if (listRegister.indexOf(playerName) == (listRegister.size() - 1)) {
                 throw new NotRegisteredException(
                         "Пользователь не зарегистрирован!"
                 );
             }
         }
 
-        if (playerOne.getStrength() > playerTwo.getStrength()) {
+        if (strengthOne > strengthTwo) {
             return 1;
-        } else if (playerOne.getStrength() < playerTwo.getStrength()) {
+        } else if (strengthOne < strengthTwo) {
             return 2;
         } else {
             return 0;
