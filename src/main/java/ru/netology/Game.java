@@ -3,45 +3,33 @@ package ru.netology;
 import ru.netology.exceptions.NotRegisteredException;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+
 
 public class Game {
 
-    private List<Player> listRegister = new ArrayList<>();
+    private HashMap<String, Player> listRegister = new HashMap<>();
 
-    public void register(Player player) {
-        listRegister.add(player);  // Регистрация игрока
+    public void register(String name, Player player) {
+        listRegister.put(name, player);  // Регистрация игрока
     }
 
     public int round(String playerName1, String playerName2) {
-
-        if (listRegister.isEmpty()) {
-            throw new NotRegisteredException(
-                    "Пользователь не зарегистрирован!"
-            );
-        }
 
         Player playerOne = null;
         Player playerTwo = null;
         int strengthOne = 0;
         int strengthTwo = 0;
 
-        // Проверка зарегистрированы ли пользователи
-        for (Player playerName : listRegister) {
-            if (playerName.getName().equals(playerName1)) {
-                playerOne = playerName;
-                strengthOne = playerOne.getStrength();
-            } else if (playerName.getName().equals(playerName2)) {
-                playerTwo = playerName;
-                strengthTwo = playerTwo.getStrength();
-            }
-
-            if (playerOne != null && playerTwo != null) break;
-            else if (listRegister.indexOf(playerName) == (listRegister.size() - 1)) {
-                throw new NotRegisteredException(
-                        "Пользователь не зарегистрирован!"
-                );
-            }
+        if (listRegister.containsKey(playerName1) && listRegister.containsKey(playerName2)) {
+            playerOne = listRegister.get(playerName1);
+            playerTwo = listRegister.get(playerName2);
+            strengthOne = playerOne.getStrength();
+            strengthTwo = playerTwo.getStrength();
+        } else {
+            throw new NotRegisteredException(
+                    "Пользователь не зарегистрирован!"
+            );
         }
 
         if (strengthOne > strengthTwo) {

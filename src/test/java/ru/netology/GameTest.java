@@ -17,10 +17,10 @@ public class GameTest {
 
     @BeforeEach
     public void start() {
-        game.register(player1);
-        game.register(player2);
-        game.register(player3);
-        game.register(player4);
+        game.register("Vova", player1);
+        game.register("Sasha", player2);
+        game.register("Kirill", player3);
+        game.register("Maksim", player4);
     }
 
     @Test  // Победа первого игрока
